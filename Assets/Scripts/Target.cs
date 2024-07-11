@@ -45,7 +45,8 @@ public class Target : MonoBehaviour
         health -= amount;
         if (health <= 0f)
         {
-            Die();
+            gameObject.SetActive(false);
+            Invoke("Respawn", respawnTime);
         }
         else
         {
@@ -66,12 +67,6 @@ public class Target : MonoBehaviour
         {
             targetRenderer.material.color = originalColor; 
         }
-    }
-
-    void Die()
-    {
-        gameObject.SetActive(false);
-        Invoke("Respawn", respawnTime);
     }
 
     void Respawn()

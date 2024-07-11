@@ -106,9 +106,15 @@ public class ShootGun : MonoBehaviour
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
         {
             Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
+            if (target != null) 
             {
                 target.TakeDamage(damage);
+            }
+
+            EnemyAI enemy = hit.transform.GetComponent<EnemyAI>();
+            if (enemy != null) 
+            {
+                enemy.TakeDamage(damage);
             }
         }
     }
