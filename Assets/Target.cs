@@ -8,23 +8,22 @@ public class Target : MonoBehaviour
     private Renderer targetRenderer;
     private Color originalColor;
 
-    // Movement variables
-    public float minMoveSpeed = 0.5f;  // Minimum speed of movement
-    public float maxMoveSpeed = 2f;    // Maximum speed of movement
-    public float minMoveRange = 1f;    // Minimum range of movement
-    public float maxMoveRange = 5f;    // Maximum range of movement
-    private float moveSpeed;           // Speed of movement
-    private float moveRange;           // Range of movement
-    private Vector3 startPosition;     // Starting position of the target
+    public float minMoveSpeed = 0.5f;
+    public float maxMoveSpeed = 2f; 
+    public float minMoveRange = 1f; 
+    public float maxMoveRange = 5f; 
+    private float moveSpeed; 
+    private float moveRange; 
+    private Vector3 startPosition;
 
     // Respawn variables
-    public float respawnTime = 5f;     // Time to respawn
+    public float respawnTime = 5f;
 
     void Awake()
     {
         targetRenderer = GetComponent<Renderer>();
-        originalColor = targetRenderer.material.color;  // Initialize the original color
-        SetRandomMovementValues();  // Set initial random movement values
+        originalColor = targetRenderer.material.color;
+        SetRandomMovementValues();
     }
 
     void Update()
@@ -34,13 +33,10 @@ public class Target : MonoBehaviour
 
     private void MoveTarget()
     {
-        // Move the target up and down
         float newY = startPosition.y + Mathf.PingPong(Time.time * moveSpeed, moveRange) - (moveRange / 2);
         
-        // Move the target left and right
         float newX = startPosition.x + Mathf.PingPong(Time.time * moveSpeed, moveRange) - (moveRange / 2);
         
-        // Update the target's position
         transform.position = new Vector3(newX, newY, startPosition.z);
     }
 
@@ -84,7 +80,7 @@ public class Target : MonoBehaviour
         SetRandomMovementValues();
         transform.position = startPosition;
         gameObject.SetActive(true);
-        targetRenderer.material.color = originalColor;  // Reset to original color
+        targetRenderer.material.color = originalColor;
     }
 
     void SetRandomMovementValues()
