@@ -6,33 +6,53 @@ using TMPro;
 
 public class ShootGun : MonoBehaviour
 {
+
+    //shooting stuff
+
+    [Header("Gun")]
     public float range;
     public float damage;
-    public Camera playerCamera;
 
-    public float cooldownDuration = 1f; 
-    private float lastShotTime = -Mathf.Infinity;
+    //camera stuff
+
+    [Header("Camera/Shake/Muzzle")]
+    public Camera playerCamera;
 
     private ThirdPersonCamera thirdPersonCamera;
     private CinemachineFreeLook cinemachineFreeLook;
-    
 
-    public float recoilAmount = 2f;
-    public float recoilSpeed = 10f;
-    public float recoilReturnSpeed = 5f;
-    private Vector3 recoilOffset;
+    public Transform Gun;
+
+    public ParticleSystem muzzleFlash;
+
+     //Recoil Cursor
+    [Header("Recoil and Cursor")]
+    public float recoilSpeed;
+    public float recoilReturnSpeed;
+    public float cursorRecoilAmount;
+
     public RectTransform cursorUI;
-    public float cursorRecoilAmount = 20f;
 
-    public int maxAmmoPerClip = 6; 
+    private Vector2 originalCursorPos;
+
+    private float cursorTolerance = 10f;
+
+     //private Vector2 originalCursorPos;
+
+    //Reload
+    [Header("Ammo/Reload")]
+    public int maxAmmoPerClip; 
     public int currentAmmoInClip; 
-    public int totalAmmo = 36;
-    public float reloadTime = 2f;
+    public int totalAmmo;
+    public float reloadTime;
     private bool isReloading = false;
     public TextMeshProUGUI ammoText;
     public GameObject reloadSymbol;
 
-    public Transform Gun;
+    /// <summary>
+    /// how to make a header
+    /// </summary>
+
     private void Awake()
     {
         thirdPersonCamera = FindObjectOfType<ThirdPersonCamera>();
@@ -45,6 +65,7 @@ public class ShootGun : MonoBehaviour
         currentAmmoInClip = maxAmmoPerClip;
         UpdateAmmoUI();
         reloadSymbol.SetActive(false);
+        originalCursorPos = cursorUI.anchoredPosition;
     }
 
     void Update()
@@ -67,16 +88,15 @@ public class ShootGun : MonoBehaviour
             return;
         }
 
-        if (thirdPersonCamera.currentStyle == ThirdPersonCamera.CameraStyle.Combat && Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= lastShotTime + cooldownDuration && !isReloading)
+        if (thirdPersonCamera.currentStyle == ThirdPersonCamera.CameraStyle.Combat && Input.GetKeyDown(KeyCode.Mouse0) && IsCursorOriginal() && !isReloading)
         {
             Shoot();
-            StartCoroutine(CameraShake(0.15f, 0.4f));
+            muzzleFlash.Play();
+            StartCoroutine(CameraShake(0.1f, 0.3f));
             AddRecoil();
             currentAmmoInClip--;
             UpdateAmmoUI();
-            lastShotTime = Time.time;
         }
-        FixRecoil();
         FixCursorRecoil();
     }
 
@@ -95,11 +115,13 @@ public class ShootGun : MonoBehaviour
 
     private IEnumerator CameraShake(float duration, float magnitude)
     {
+        //Debug.Log("Camera Shake");
         CinemachineBasicMultiChannelPerlin[] perlinChannels = cinemachineFreeLook.GetComponentsInChildren<CinemachineBasicMultiChannelPerlin>();
 
         foreach (var perlin in perlinChannels)
         {
             perlin.m_AmplitudeGain = magnitude;
+            //Debug.Log("Magnitude amplified");
         }
 
         yield return new WaitForSeconds(duration);
@@ -112,21 +134,19 @@ public class ShootGun : MonoBehaviour
 
     void AddRecoil()
     {
-        recoilOffset += Vector3.up * recoilAmount;
         Vector2 cursorPos = cursorUI.anchoredPosition;
         cursorPos += new Vector2(Random.Range(-cursorRecoilAmount, cursorRecoilAmount), cursorRecoilAmount);
         cursorUI.anchoredPosition = cursorPos;
     }
 
-    void FixRecoil()
-    {
-        recoilOffset = Vector3.Lerp(recoilOffset, Vector3.zero, recoilReturnSpeed * Time.deltaTime);
-        playerCamera.transform.localEulerAngles -= recoilOffset * recoilSpeed * Time.deltaTime;
-    }
-
     void FixCursorRecoil()
     {
         cursorUI.anchoredPosition = Vector2.Lerp(cursorUI.anchoredPosition, Vector2.zero, recoilReturnSpeed * Time.deltaTime);
+    }
+
+     bool IsCursorOriginal()
+    {
+        return Vector2.Distance(cursorUI.anchoredPosition, originalCursorPos) < cursorTolerance;
     }
 
     private IEnumerator Reload()

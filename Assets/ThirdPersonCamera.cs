@@ -38,6 +38,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        thirdPersonCam.SetActive(true);
     }
 
     private void Update()
