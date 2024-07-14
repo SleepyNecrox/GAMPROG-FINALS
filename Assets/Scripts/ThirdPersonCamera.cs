@@ -20,6 +20,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public GameObject crossHair;
 
     public GameObject crossHairOuter;
+
     public enum CameraStyle
     {
         Basic,
