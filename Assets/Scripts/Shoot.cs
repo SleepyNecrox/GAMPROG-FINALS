@@ -179,7 +179,7 @@ public class ShootGun : MonoBehaviour
         reloadSymbol.SetActive(false);
     }
 
-    private void UpdateAmmoUI()
+    public void UpdateAmmoUI()
     {
         ammoText.text = currentAmmoInClip.ToString() + " / " + totalAmmo.ToString();
     }
