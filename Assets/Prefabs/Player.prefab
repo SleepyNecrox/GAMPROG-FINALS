@@ -349,7 +349,7 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.6509809, b: 0.5803922, a: 1}
+      minColor: {r: 1, g: 0.5073209, b: 0.4481132, a: 1}
       maxColor: {r: 1, g: 0.83388025, b: 0.6179246, a: 1}
       maxGradient:
         serializedVersion: 2
@@ -5152,18 +5152,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d975cd2a999467e49adf6c96ab61cc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  jumpForce: 10
-  jumpCooldown: 1
+  moveSpeed: 7
+  jumpForce: 7
+  jumpCooldown: 0.75
   airMultiplier: 0.2
   fallMultiplier: 2.5
   jumpKey: 32
   orientation: {fileID: 4105860408067011365}
-  playerHeight: 3
+  playerHeight: 2.5
   Ground:
     serializedVersion: 2
     m_Bits: 8
   groundDrag: 5
+  Gold: 0
 --- !u!1001 &2576239293521004183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5277,7 +5278,7 @@ MonoBehaviour:
   maxAmmoPerClip: 6
   currentAmmoInClip: 0
   totalAmmo: 36
-  reloadTime: 2
+  reloadTime: 3
   ammoText: {fileID: 0}
   reloadSymbol: {fileID: 0}
 --- !u!1001 &4523876492945133970
@@ -5356,6 +5357,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ac645f38059f5648a3658de63237fda, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -5372,6 +5377,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4ac645f38059f5648a3658de63237fda, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6321913650191910522}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4ac645f38059f5648a3658de63237fda, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1285621562141149609}
   m_SourcePrefab: {fileID: 100100000, guid: 4ac645f38059f5648a3658de63237fda, type: 3}
 --- !u!1 &3605518952013311171 stripped
 GameObject:
@@ -5427,7 +5435,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3605518952013311171}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e2476a167369a854c82e281c0fd68f7f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5436,6 +5444,29 @@ CapsuleCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &1285621562141149609
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3605518952013311171}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

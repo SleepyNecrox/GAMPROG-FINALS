@@ -9,8 +9,9 @@ public class ReloadArea : MonoBehaviour
 
    private int maxTotalAmmo;
 
-   bool inReloadArea;
+   private bool inReloadArea;
 
+   private Transform playerCameraTransform;
    public GameObject reloadText;
 
    private void Awake()
@@ -22,6 +23,7 @@ public class ReloadArea : MonoBehaviour
    {
     maxTotalAmmo = shootGun.totalAmmo;
     reloadText.SetActive(false);
+    playerCameraTransform = Camera.main.transform;
    }
 
 
@@ -31,7 +33,7 @@ public class ReloadArea : MonoBehaviour
         {
             inReloadArea = true;
             reloadText.SetActive(true);
-
+            FacePlayer();
         }
     }
 
@@ -46,11 +48,23 @@ public class ReloadArea : MonoBehaviour
 
     private void Update()
     {
+        if(inReloadArea)
+        {
+            FacePlayer();
+        }
+        
         if(Input.GetKeyDown(KeyCode.E) && inReloadArea)
             {
             //Debug.Log("Hello");
             shootGun.totalAmmo = maxTotalAmmo;
             shootGun.UpdateAmmoUI();
             }
+    }
+
+    private void FacePlayer()
+    {
+        Vector3 directionToCamera = playerCameraTransform.position - reloadText.transform.position;
+        directionToCamera.y = 0;
+        reloadText.transform.rotation = Quaternion.LookRotation(-directionToCamera);
     }
 }

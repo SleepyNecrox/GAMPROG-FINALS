@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump = true;
 
-    public float fallMultiplier = 2.5f; 
+    public float fallMultiplier; 
 
     public KeyCode jumpKey = KeyCode.Space;
 
@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     public void AddGold()
     {
         Gold = Gold + 15;
-        
+
         //Debug.Log(Gold);
     }
 }
