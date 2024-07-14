@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private float health = 100f;
     public float moveSpeed;
     public float jumpForce;
     public float jumpCooldown;
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    public int Gold = 0;
 
 
     private void Start()
@@ -107,5 +110,22 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        Debug.Log("Hit");
+        health -= amount;
+        if (health <= 0f)
+        {
+            Debug.Log("Dead");
+        }
+    }
+
+    public void AddGold()
+    {
+        Gold = Gold + 15;
+        
+        //Debug.Log(Gold);
     }
 }

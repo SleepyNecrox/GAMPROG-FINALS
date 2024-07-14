@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
+
+    private PlayerMovement playerMovement;
     public Transform orientation;
     public Transform player;
     public Transform playerObj;
@@ -26,8 +28,6 @@ public class ThirdPersonCamera : MonoBehaviour
         Basic,
         Combat
     }
-
-    private PlayerMovement playerMovement;
 
     private void Awake()
     {
@@ -52,7 +52,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if(currentStyle == CameraStyle.Basic)
         {
-        playerMovement.moveSpeed = 7.0f;
+        playerMovement.moveSpeed = 7f;
         crossHair.SetActive(false);
         crossHairOuter.SetActive(false);
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -67,7 +67,7 @@ public class ThirdPersonCamera : MonoBehaviour
         {
             crossHair.SetActive(true);
             crossHairOuter.SetActive(true);
-            playerMovement.moveSpeed = 4.0f;
+            playerMovement.moveSpeed = 4f;
             Vector3 dirToCombatLookAt = combatLookAt.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
             orientation.forward = dirToCombatLookAt.normalized;
 

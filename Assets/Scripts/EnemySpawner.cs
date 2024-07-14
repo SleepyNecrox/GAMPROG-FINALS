@@ -8,15 +8,27 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public float spawnInterval;
     public int maxEnemies;
+    bool canSpawn = true;
+
+    public Timer timer;
 
     void Start()
     {
-        StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnWave());
     }
 
-    private IEnumerator SpawnEnemies()
+    void Update()
     {
-        while (true)
+        if(timer.waveTime == 0)
+        {
+            canSpawn =  false;
+        }
+    }
+
+    private IEnumerator SpawnWave()
+    {
+
+        while (canSpawn)
         {
             if (currentEnemyCount < maxEnemies)
             {
@@ -24,11 +36,16 @@ public class EnemySpawner : MonoBehaviour
             }
             yield return new WaitForSeconds(spawnInterval);
         }
+            canSpawn = false;
+
     }
 
     private void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, transform.position, transform.rotation);
+        if(!canSpawn)
+        return;
+
+        Instantiate(enemyPrefab, new Vector3(Random.Range(-25f, 25f), Random.Range(0f, 0f), 25), Quaternion.identity);
         currentEnemyCount++;
     }
 
@@ -36,4 +53,5 @@ public class EnemySpawner : MonoBehaviour
     {
         currentEnemyCount--;
     }
+
 }

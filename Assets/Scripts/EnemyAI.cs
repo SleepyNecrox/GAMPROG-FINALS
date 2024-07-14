@@ -5,23 +5,27 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     private Transform player;
-    public float followRange;
-    public float moveSpeed;
-
     private Rigidbody rb;
-
-    public float health;
-
     private Renderer targetRenderer;
     private Color originalColor;
 
     private EnemySpawner spawner;
+
+    public float followRange;
+    public float moveSpeed;
+
+    public float health;
+    public float damage;
+
+    private PlayerMovement playerMovement;
+
 
     void Awake()
     {
         targetRenderer = GetComponent<Renderer>();
         originalColor = targetRenderer.material.color;
         spawner = FindObjectOfType<EnemySpawner>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     void Start()
@@ -53,6 +57,7 @@ public class EnemyAI : MonoBehaviour
         if (health <= 0f)
         {
             spawner.EnemyDied();
+            playerMovement.AddGold();
             Destroy(gameObject);
         }
         else
@@ -75,4 +80,18 @@ public class EnemyAI : MonoBehaviour
             targetRenderer.material.color = originalColor; 
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
+        }
+    }
 }
+
+
