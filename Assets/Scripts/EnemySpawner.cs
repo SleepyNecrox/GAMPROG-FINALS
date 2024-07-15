@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private float spawnInterval;
+    [SerializeField] private int maxEnemies;
+    [SerializeField] private bool canSpawn = true;
+
+    [SerializeField] private Timer timer;
     private int currentEnemyCount;
-    public GameObject enemyPrefab;
-    public float spawnInterval;
-    public int maxEnemies;
-    bool canSpawn = true;
 
-    public Timer timer;
-
-    void Start()
+    private void Start()
     {
         StartCoroutine(SpawnWave());
     }
 
-    void Update()
+    private void Update()
     {
         if(timer.waveTime == 0)
         {
@@ -49,7 +49,7 @@ public class EnemySpawner : MonoBehaviour
         currentEnemyCount++;
     }
 
-    public void EnemyDied()
+    internal void EnemyDied()
     {
         currentEnemyCount--;
     }

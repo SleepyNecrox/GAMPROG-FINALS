@@ -6,23 +6,24 @@ public class ThirdPersonCamera : MonoBehaviour
 {
 
     private PlayerMovement playerMovement;
-    public Transform orientation;
-    public Transform player;
-    public Transform playerObj;
-    public Rigidbody rb;
-    public float rotationSpeed;
+
+    private ShootGun shootGun;
+    [SerializeField] private Transform orientation;
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform playerObj;
+    [SerializeField] private Rigidbody rb;
+
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] private Transform combatLookAt;
+
+    [SerializeField] private GameObject thirdPersonCam;
+    [SerializeField] private GameObject combatCam;
+
+    [SerializeField] private GameObject crossHair;
+
+    [SerializeField] private GameObject crossHairOuter;
 
     public CameraStyle currentStyle;
-
-     public Transform combatLookAt;
-
-    public GameObject thirdPersonCam;
-    public GameObject combatCam;
-
-    public GameObject crossHair;
-
-    public GameObject crossHairOuter;
-
     public enum CameraStyle
     {
         Basic,
@@ -32,6 +33,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private void Awake()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
+        shootGun = FindObjectOfType<ShootGun>();
     }
 
 
@@ -65,8 +67,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
         else if(currentStyle == CameraStyle.Combat)
         {
+            if(!shootGun.isReloading)
+            {
             crossHair.SetActive(true);
             crossHairOuter.SetActive(true);
+            }
             playerMovement.moveSpeed = 4f;
             Vector3 dirToCombatLookAt = combatLookAt.position - new Vector3(transform.position.x, combatLookAt.position.y, transform.position.z);
             orientation.forward = dirToCombatLookAt.normalized;

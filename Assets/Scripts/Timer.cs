@@ -7,12 +7,11 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 
 {
-    public TextMeshProUGUI Time;
-
-    public float currentTime;
     public float waveTime = 180f;
+    [SerializeField] private TextMeshProUGUI Time;
 
-    bool timerStart = true;
+    [SerializeField] private float currentTime;
+    [SerializeField] private bool timerStart = true;
     void Start()
     {
       currentTime = waveTime;

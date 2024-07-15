@@ -5,21 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class EnterScene : MonoBehaviour
 {
-    private bool inEnterArea;
     [SerializeField] private GameObject InteractableE;
+    [SerializeField] private EnterType enterType;
 
-    private Transform playerCameraTransform;
-
-    public EnterType enterType;
-
-    public enum EnterType
+    [SerializeField] private  enum EnterType
     {
         ShopEnter,
         PracticeEnter,
 
         StageEnter
     }
-    void Start()
+
+    private bool inEnterArea;
+    private Transform playerCameraTransform;
+
+    private void Start()
     {
      InteractableE.SetActive(false);
      playerCameraTransform = Camera.main.transform;
@@ -44,7 +44,7 @@ public class EnterScene : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if(inEnterArea)
         {

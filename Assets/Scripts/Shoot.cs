@@ -10,44 +10,48 @@ public class ShootGun : MonoBehaviour
     //shooting stuff
 
     [Header("Gun")]
-    public float range;
-    public float damage;
+    [SerializeField] private float range;
+    [SerializeField] private float damage;
 
     //camera stuff
 
     [Header("Camera/Shake/Muzzle")]
-    public Camera playerCamera;
+    [SerializeField] private Camera playerCamera;
 
     private ThirdPersonCamera thirdPersonCamera;
     private CinemachineFreeLook cinemachineFreeLook;
 
-    public Transform Gun;
+    [SerializeField] private Transform Gun;
 
-    public ParticleSystem muzzleFlash;
+    [SerializeField] private ParticleSystem muzzleFlash;
 
      //Recoil Cursor
     [Header("Recoil and Cursor")]
-    public float recoilSpeed;
-    public float recoilReturnSpeed;
-    public float cursorRecoilAmount;
+    [SerializeField] private float recoilSpeed;
+    [SerializeField] private float recoilReturnSpeed;
+    [SerializeField] private float cursorRecoilAmount;
 
-    public RectTransform cursorUI;
+    [SerializeField] private RectTransform cursorUI;
+
+    [SerializeField] private GameObject cursorActiveUI;
+
+    [SerializeField] private GameObject cursorOutlineUI;
 
     private Vector2 originalCursorPos;
 
-    private float cursorTolerance = 10f;
+    [SerializeField] private float cursorTolerance;
 
      //private Vector2 originalCursorPos;
 
     //Reload
     [Header("Ammo/Reload")]
-    public int maxAmmoPerClip; 
-    public int currentAmmoInClip; 
+    [SerializeField] private int maxAmmoPerClip; 
+    [SerializeField] private int currentAmmoInClip; 
     public int totalAmmo;
-    public float reloadTime;
-    private bool isReloading = false;
-    public TextMeshProUGUI ammoText;
-    public GameObject reloadSymbol;
+    [SerializeField] private float reloadTime;
+    public bool isReloading = false;
+    [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private GameObject reloadSymbol;
 
     /// <summary>
     /// how to make a header
@@ -68,7 +72,7 @@ public class ShootGun : MonoBehaviour
         originalCursorPos = cursorUI.anchoredPosition;
     }
 
-    void Update()
+    private void Update()
     {
         if (isReloading)
             return;
@@ -82,13 +86,13 @@ public class ShootGun : MonoBehaviour
             return;
         }
 
-        if (currentAmmoInClip <= 0)
+        if (currentAmmoInClip <= 0 && totalAmmo > 0)
         {
             StartCoroutine(Reload());
             return;
         }
 
-        if (thirdPersonCamera.currentStyle == ThirdPersonCamera.CameraStyle.Combat && Input.GetKeyDown(KeyCode.Mouse0) && IsCursorOriginal() && !isReloading)
+        if (thirdPersonCamera.currentStyle == ThirdPersonCamera.CameraStyle.Combat && Input.GetKeyDown(KeyCode.Mouse0) && IsCursorOriginal() && !isReloading && currentAmmoInClip > 0)
         {
             Shoot();
             muzzleFlash.Play();
@@ -100,7 +104,7 @@ public class ShootGun : MonoBehaviour
         FixCursorRecoil();
     }
 
-    void Shoot()
+    private void Shoot()
     {
         RaycastHit hit;
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
@@ -138,19 +142,19 @@ public class ShootGun : MonoBehaviour
         }
     }
 
-    void AddRecoil()
+    private void AddRecoil()
     {
         Vector2 cursorPos = cursorUI.anchoredPosition;
         cursorPos += new Vector2(Random.Range(-cursorRecoilAmount, cursorRecoilAmount), cursorRecoilAmount);
         cursorUI.anchoredPosition = cursorPos;
     }
 
-    void FixCursorRecoil()
+    private void FixCursorRecoil()
     {
         cursorUI.anchoredPosition = Vector2.Lerp(cursorUI.anchoredPosition, Vector2.zero, recoilReturnSpeed * Time.deltaTime);
     }
 
-     bool IsCursorOriginal()
+    private bool IsCursorOriginal()
     {
         return Vector2.Distance(cursorUI.anchoredPosition, originalCursorPos) < cursorTolerance;
     }
@@ -158,7 +162,10 @@ public class ShootGun : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
+        cursorActiveUI.SetActive(false);
+        cursorOutlineUI.SetActive(false);
         reloadSymbol.SetActive(true);
+        StartCoroutine(Rotate());
 
         yield return new WaitForSeconds(reloadTime);
 
@@ -176,11 +183,23 @@ public class ShootGun : MonoBehaviour
 
         UpdateAmmoUI();
         isReloading = false;
+        cursorActiveUI.SetActive(true);
+        cursorOutlineUI.SetActive(true);
         reloadSymbol.SetActive(false);
     }
 
-    public void UpdateAmmoUI()
+    internal void UpdateAmmoUI()
     {
         ammoText.text = currentAmmoInClip.ToString() + " / " + totalAmmo.ToString();
     }
+
+    private IEnumerator Rotate()
+    {
+        while (isReloading)
+        {
+        reloadSymbol.transform.Rotate(Vector3.forward, -360 * Time.deltaTime);
+        yield return null;
+        }
+    }
+
 }

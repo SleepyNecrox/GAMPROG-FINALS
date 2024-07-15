@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    public float health = 50f;
-    private Renderer targetRenderer;
-    private Color originalColor;
-
-    public float minMoveSpeed = 0.5f;
-    public float maxMoveSpeed = 2f; 
-    public float minMoveRange = 1f; 
-    public float maxMoveRange = 5f; 
+    [SerializeField] private float health = 50f;
+    [SerializeField] private float minMoveSpeed = 0.5f;
+    [SerializeField] private float maxMoveSpeed = 2f; 
+    [SerializeField] private float minMoveRange = 1f; 
+    [SerializeField] private float maxMoveRange = 5f; 
+    [SerializeField] private float respawnTime = 5f;
     private float moveSpeed; 
     private float moveRange; 
     private Vector3 startPosition;
 
-    // Respawn variables
-    public float respawnTime = 5f;
+    private Renderer targetRenderer;
+    private Color originalColor;
 
     void Awake()
     {
         targetRenderer = GetComponent<Renderer>();
         originalColor = targetRenderer.material.color;
-        SetRandomMovementValues();
+        RandomMovement();
     }
 
     void Update()
@@ -72,13 +70,13 @@ public class Target : MonoBehaviour
     void Respawn()
     {
         health = 50f;
-        SetRandomMovementValues();
+        RandomMovement();
         transform.position = startPosition;
         gameObject.SetActive(true);
         targetRenderer.material.color = originalColor;
     }
 
-    void SetRandomMovementValues()
+    void RandomMovement()
     {
         moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
         moveRange = Random.Range(minMoveRange, maxMoveRange);

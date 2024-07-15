@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ReloadArea : MonoBehaviour
 {
-   
+    
+   [SerializeField] private GameObject reloadText;
    private ShootGun shootGun;
 
    private int maxTotalAmmo;
@@ -12,7 +13,7 @@ public class ReloadArea : MonoBehaviour
    private bool inReloadArea;
 
    private Transform playerCameraTransform;
-   public GameObject reloadText;
+
 
    private void Awake()
    {

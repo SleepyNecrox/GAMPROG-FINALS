@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    [SerializeField] private float health;
+    [SerializeField] private float damage;
+
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float followRange;
     private Transform player;
     private Rigidbody rb;
     private Renderer targetRenderer;
@@ -11,16 +16,10 @@ public class EnemyAI : MonoBehaviour
 
     private EnemySpawner spawner;
 
-    public float followRange;
-    public float moveSpeed;
-
-    public float health;
-    public float damage;
-
     private PlayerMovement playerMovement;
 
 
-    void Awake()
+    private void Awake()
     {
         targetRenderer = GetComponent<Renderer>();
         originalColor = targetRenderer.material.color;
@@ -28,13 +27,13 @@ public class EnemyAI : MonoBehaviour
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void Update()
+    private void Update()
     {
         float distance = Vector3.Distance(player.position, transform.position);
 
@@ -44,14 +43,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void FollowPlayer()
+    private void FollowPlayer()
     {
         Vector3 direction = (player.position - transform.position).normalized;
         Vector3 move = direction * moveSpeed * Time.deltaTime;
         rb.MovePosition(transform.position + move);
     }
 
-   public void TakeDamage(float amount)
+   internal void TakeDamage(float amount)
     {
         health -= amount;
         if (health <= 0f)

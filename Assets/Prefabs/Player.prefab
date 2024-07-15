@@ -5152,6 +5152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d975cd2a999467e49adf6c96ab61cc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  goldText: {fileID: 0}
   moveSpeed: 7
   jumpForce: 7
   jumpCooldown: 0.75
@@ -5275,10 +5277,14 @@ MonoBehaviour:
   recoilReturnSpeed: 3
   cursorRecoilAmount: 100
   cursorUI: {fileID: 0}
+  cursorActiveUI: {fileID: 0}
+  cursorOutlineUI: {fileID: 0}
+  cursorTolerance: 11
   maxAmmoPerClip: 6
   currentAmmoInClip: 0
   totalAmmo: 36
   reloadTime: 3
+  isReloading: 0
   ammoText: {fileID: 0}
   reloadSymbol: {fileID: 0}
 --- !u!1001 &4523876492945133970

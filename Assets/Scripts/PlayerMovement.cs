@@ -1,42 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float health = 100f;
-    public float moveSpeed;
-    public float jumpForce;
-    public float jumpCooldown;
-    public float airMultiplier;
-    bool readyToJump = true;
+    [SerializeField] private float health = 100f;
 
-    public float fallMultiplier; 
+    [SerializeField] private TextMeshProUGUI goldText;
+    public float moveSpeed; //too lazy for encapsulation zz
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpCooldown;
+    [SerializeField] private float airMultiplier;
+    private bool readyToJump = true;
 
-    public KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] private float fallMultiplier; 
 
-    public Transform orientation;
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
 
-    public float playerHeight;
-    public LayerMask Ground;
+    [SerializeField] private Transform orientation;
+
+    [SerializeField] private float playerHeight;
+    [SerializeField] private LayerMask Ground;
     bool grounded;
 
-    public float groundDrag;
+    [SerializeField] private float groundDrag;
 
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
 
-    Vector3 moveDirection;
+    private Vector3 moveDirection;
 
-    Rigidbody rb;
+    private Rigidbody rb;
 
-    public int Gold = 0;
+    [SerializeField] private int Gold = 0;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; 
+        goldText.text = Gold.ToString();
     }
 
     private void Update()
@@ -112,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
+    internal void TakeDamage(float amount)
     {
         Debug.Log("Hit");
         health -= amount;
@@ -122,10 +126,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void AddGold()
+    internal void AddGold()
     {
         Gold = Gold + 15;
-
+        goldText.text = Gold.ToString();
         //Debug.Log(Gold);
     }
 }
