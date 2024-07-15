@@ -5279,6 +5279,7 @@ MonoBehaviour:
   cursorUI: {fileID: 0}
   cursorActiveUI: {fileID: 0}
   cursorOutlineUI: {fileID: 0}
+  rotationSpeed: -100
   cursorTolerance: 11
   maxAmmoPerClip: 6
   currentAmmoInClip: 0

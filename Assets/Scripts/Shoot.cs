@@ -37,6 +37,8 @@ public class ShootGun : MonoBehaviour
 
     [SerializeField] private GameObject cursorOutlineUI;
 
+    [SerializeField] private float rotationSpeed;
+
     private Vector2 originalCursorPos;
 
     [SerializeField] private float cursorTolerance;
@@ -197,7 +199,7 @@ public class ShootGun : MonoBehaviour
     {
         while (isReloading)
         {
-        reloadSymbol.transform.Rotate(Vector3.forward, -360 * Time.deltaTime);
+        reloadSymbol.transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
         yield return null;
         }
     }
