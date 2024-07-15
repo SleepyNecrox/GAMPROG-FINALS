@@ -11,7 +11,7 @@ public class ShootGun : MonoBehaviour
 
     [Header("Gun")]
     [SerializeField] private float range;
-    [SerializeField] private float damage;
+    [SerializeField] private int damage;
 
     //camera stuff
 
@@ -43,8 +43,6 @@ public class ShootGun : MonoBehaviour
 
     [SerializeField] private float cursorTolerance;
 
-     //private Vector2 originalCursorPos;
-
     //Reload
     [Header("Ammo/Reload")]
     [SerializeField] private int maxAmmoPerClip; 
@@ -72,6 +70,12 @@ public class ShootGun : MonoBehaviour
         UpdateAmmoUI();
         reloadSymbol.SetActive(false);
         originalCursorPos = cursorUI.anchoredPosition;
+
+        //saving data for upgrades
+        damage = Data.Instance.playerDamage;
+        maxAmmoPerClip = Data.Instance.maxAmmo;
+        reloadTime = Data.Instance.reloadSpeed;
+        recoilReturnSpeed = Data.Instance.recoilCooldown;
     }
 
     private void Update()
@@ -82,7 +86,7 @@ public class ShootGun : MonoBehaviour
         Vector3 cameraEuler = playerCamera.transform.eulerAngles;
         Gun.localRotation = Quaternion.Euler(cameraEuler.x, 0, 0);
 
-        if (Input.GetKeyDown(KeyCode.R) && currentAmmoInClip < maxAmmoPerClip)
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmoInClip < maxAmmoPerClip && totalAmmo > 0)
         {
             StartCoroutine(Reload());
             return;
@@ -121,6 +125,17 @@ public class ShootGun : MonoBehaviour
             if (enemy != null) 
             {
                 enemy.TakeDamage(damage);
+            }
+
+            Upgrade upgrade = hit.transform.GetComponent<Upgrade>();
+            if(upgrade != null)
+            {
+                upgrade.BuyUpgrade();
+                Data.Instance.Save();
+                damage = Data.Instance.playerDamage;
+                maxAmmoPerClip = Data.Instance.maxAmmo;
+                reloadTime = Data.Instance.reloadSpeed;
+                recoilReturnSpeed = Data.Instance.recoilCooldown;
             }
         }
     }

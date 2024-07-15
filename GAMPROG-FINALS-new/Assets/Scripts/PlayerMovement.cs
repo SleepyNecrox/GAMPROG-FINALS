@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float health = 100f;
 
     [SerializeField] private TextMeshProUGUI goldText;
-    public float moveSpeed; //too lazy for encapsulation zz
+    public float moveSpeed; //too lazy zz
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCooldown;
     [SerializeField] private float airMultiplier;
@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; 
+
+        //for data
+        Gold = Data.Instance.playerGold;
         goldText.text = Gold.ToString();
     }
 
@@ -130,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Gold = Gold + 15;
         goldText.text = Gold.ToString();
+        Data.Instance.playerGold = Gold;
+        Data.Instance.Save();
         //Debug.Log(Gold);
     }
 }
