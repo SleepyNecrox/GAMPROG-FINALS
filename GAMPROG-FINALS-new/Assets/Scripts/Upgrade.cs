@@ -19,6 +19,8 @@ public class Upgrade : MonoBehaviour
         Reload,
         Cooldown,
 
+        Gold
+
     }
 
     private void Awake()
@@ -71,6 +73,12 @@ public class Upgrade : MonoBehaviour
                playerMovement.UpdateGoldUI();
                UpgradeLevel();
             }
+        }
+
+        if(upgradeType == UpgradeType.Gold)
+         {
+               Data.Instance.playerGold += 500;
+               playerMovement.UpdateGoldUI();
         }
     }
 

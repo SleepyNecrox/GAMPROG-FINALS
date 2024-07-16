@@ -7,18 +7,50 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 
 {
-    public float waveTime = 180f;
+    [SerializeField] private float waveTime;
     [SerializeField] private TextMeshProUGUI Time;
 
-    [SerializeField] private float currentTime;
-    [SerializeField] private bool timerStart = true;
-    void Start()
+    [SerializeField] internal float currentTime;
+    [SerializeField] internal bool timerStart = false;
+
+    [SerializeField] private GameObject gameObject;
+
+    [SerializeField] private GameObject shopArea;
+
+    [SerializeField] private GameObject practiceArea;
+    [SerializeField] internal int waveNumber;
+
+    private EnemySpawner enemyspawner;
+
+    private void Awake()
     {
-      currentTime = waveTime;
-      StartCoroutine(Countdown());  
+        enemyspawner = FindObjectOfType<EnemySpawner>();
+        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        Collider collider = gameObject.GetComponent<Collider>();
+    }
+
+    private void Start()
+    {
+        currentTime = waveTime;  
+    }
+
+    internal void StartCountdown()
+    {
+        //Debug.Log("Started");
+        shopArea.SetActive(false);
+        practiceArea.SetActive(false);
+        currentTime = waveTime; 
+        waveNumber++;
+        //Debug.Log(waveNumber);
+        timerStart = true;
+        StartCoroutine(Countdown());
+        enemyspawner.StartWave();
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
     }
     private IEnumerator Countdown()
     {
+        //Debug.Log("Started Countdown");
         while (currentTime >= 0 && timerStart)
         {
             UpdateTimerDisplay();
@@ -29,6 +61,15 @@ public class Timer : MonoBehaviour
         if (currentTime <= 0)
         {
             timerStart = false;
+            shopArea.SetActive(true);
+            practiceArea.SetActive(true);
+
+        }
+
+        if(currentTime <= 0 && waveNumber <= 3)
+        {
+            GetComponent<MeshRenderer>().enabled = true;
+            GetComponent<Collider>().enabled = true;
         }
     }
 

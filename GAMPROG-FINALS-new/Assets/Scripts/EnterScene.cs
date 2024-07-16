@@ -7,7 +7,6 @@ public class EnterScene : MonoBehaviour
 {
     [SerializeField] private GameObject InteractableE;
     [SerializeField] private EnterType enterType;
-
     [SerializeField] private  enum EnterType
     {
         ShopEnter,

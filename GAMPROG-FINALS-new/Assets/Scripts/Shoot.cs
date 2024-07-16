@@ -139,6 +139,13 @@ public class ShootGun : MonoBehaviour
                 recoilReturnSpeed = Data.Instance.recoilCooldown;
                 rotationSpeed = Data.Instance.rotateReload;
             }
+
+            Timer timer = hit.transform.GetComponent<Timer>();
+            if(timer != null)
+            {
+                //Debug.Log("hit timer");
+                timer.StartCountdown();
+            }
         }
     }
 

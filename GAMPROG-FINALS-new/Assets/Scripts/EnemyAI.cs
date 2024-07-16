@@ -18,6 +18,10 @@ public class EnemyAI : MonoBehaviour
 
     private PlayerMovement playerMovement;
 
+    private Timer timer;
+
+    public float Gold;
+
 
     private void Awake()
     {
@@ -90,6 +94,13 @@ public class EnemyAI : MonoBehaviour
                 player.TakeDamage(damage);
             }
         }
+    }
+
+     public void SetStats(int waveNumber)
+    {
+        health = 30 + (waveNumber * 10);
+        damage = 20 + (waveNumber * 2);
+        moveSpeed = 10 + (waveNumber * 0.5f);
     }
 }
 

@@ -35,11 +35,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private int Gold;
 
+    private Timer timer;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; 
+
+        timer = FindObjectOfType<Timer>();
 
         //for data
         Gold = Data.Instance.playerGold;
@@ -132,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
     internal void AddGold()
     {
-        Gold = Gold + 15;
+        Gold = Gold + 15 * timer.waveNumber;
         Data.Instance.playerGold = Gold;
         UpdateGoldUI();
         Data.Instance.Save();
