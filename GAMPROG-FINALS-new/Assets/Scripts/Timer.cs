@@ -31,7 +31,14 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        currentTime = waveTime;  
+        currentTime = waveTime;
+        waveNumber = Data.Instance.wave;
+
+        if(waveNumber >= 4)
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+        }
     }
 
     internal void StartCountdown()
@@ -41,6 +48,7 @@ public class Timer : MonoBehaviour
         practiceArea.SetActive(false);
         currentTime = waveTime; 
         waveNumber++;
+        Data.Instance.wave++;
         //Debug.Log(waveNumber);
         timerStart = true;
         StartCoroutine(Countdown());
@@ -63,7 +71,6 @@ public class Timer : MonoBehaviour
             timerStart = false;
             shopArea.SetActive(true);
             practiceArea.SetActive(true);
-
         }
 
         if(currentTime <= 0 && waveNumber <= 3)

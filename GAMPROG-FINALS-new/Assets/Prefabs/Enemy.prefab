@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe23735aee285f94dbd05fc1d92e7e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
-  damage: 25
-  moveSpeed: 10
+  health: 40
+  damage: 22
+  moveSpeed: 11.5
   followRange: 100
   Gold: 10
 --- !u!135 &6048489180020169575
