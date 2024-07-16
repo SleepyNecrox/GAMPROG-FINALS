@@ -108,7 +108,7 @@ public class EnemyAI : MonoBehaviour
     {
         health = 30 + (waveNumber * 10);
         damage = 20 + (waveNumber * 2);
-        moveSpeed = 10 + (waveNumber * 0.5f);
+        moveSpeed = 11 + (waveNumber * 0.5f);
     }
 
     private void Die()
