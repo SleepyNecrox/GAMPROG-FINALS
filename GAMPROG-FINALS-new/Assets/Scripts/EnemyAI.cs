@@ -29,6 +29,7 @@ public class EnemyAI : MonoBehaviour
         originalColor = targetRenderer.material.color;
         spawner = FindObjectOfType<EnemySpawner>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        timer = FindObjectOfType<Timer>();
     }
 
     private void Start()
@@ -45,6 +46,13 @@ public class EnemyAI : MonoBehaviour
         {
             FollowPlayer();
         }
+
+        if(timer.currentTime <= 0)
+        {
+            Die();
+        }
+
+
     }
 
     private void FollowPlayer()
@@ -101,6 +109,11 @@ public class EnemyAI : MonoBehaviour
         health = 30 + (waveNumber * 10);
         damage = 20 + (waveNumber * 2);
         moveSpeed = 10 + (waveNumber * 0.5f);
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }
 
