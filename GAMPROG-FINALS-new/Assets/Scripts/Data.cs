@@ -14,6 +14,9 @@ public class Data : MonoBehaviour
 
     [SerializeField] public float recoilCooldown;
 
+    [SerializeField] public float rotateReload;
+
+
     public static Data Instance;
 
     private void Awake()
@@ -42,6 +45,7 @@ public class Data : MonoBehaviour
         PlayerPrefs.SetInt("MaxAmmo", maxAmmo);
         PlayerPrefs.SetFloat("ReloadSpeed", reloadSpeed);
         PlayerPrefs.SetFloat("RecoilCooldown", recoilCooldown);
+        PlayerPrefs.SetFloat("RotateReload", rotateReload);
         PlayerPrefs.Save();
     }
 
@@ -52,5 +56,6 @@ public class Data : MonoBehaviour
         maxAmmo = PlayerPrefs.GetInt("MaxAmmo", 6);
         reloadSpeed = PlayerPrefs.GetFloat("ReloadSpeed", 3);
         recoilCooldown = PlayerPrefs.GetFloat("RecoilCooldown", 3);
+        rotateReload = PlayerPrefs.GetFloat("RotateReload", -100);
     }
 }

@@ -76,6 +76,7 @@ public class ShootGun : MonoBehaviour
         maxAmmoPerClip = Data.Instance.maxAmmo;
         reloadTime = Data.Instance.reloadSpeed;
         recoilReturnSpeed = Data.Instance.recoilCooldown;
+        rotationSpeed = Data.Instance.rotateReload;
     }
 
     private void Update()
@@ -136,6 +137,7 @@ public class ShootGun : MonoBehaviour
                 maxAmmoPerClip = Data.Instance.maxAmmo;
                 reloadTime = Data.Instance.reloadSpeed;
                 recoilReturnSpeed = Data.Instance.recoilCooldown;
+                rotationSpeed = Data.Instance.rotateReload;
             }
         }
     }

@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
 
-    [SerializeField] private int Gold = 0;
+    [SerializeField] private int Gold;
 
 
     private void Start()
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         //for data
         Gold = Data.Instance.playerGold;
-        goldText.text = Gold.ToString();
+        UpdateGoldUI();
     }
 
     private void Update()
@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
         PlayerInput();
         controlSpeed();
+        
     }
     private void FixedUpdate()
     {
@@ -132,9 +133,15 @@ public class PlayerMovement : MonoBehaviour
     internal void AddGold()
     {
         Gold = Gold + 15;
-        goldText.text = Gold.ToString();
         Data.Instance.playerGold = Gold;
+        UpdateGoldUI();
         Data.Instance.Save();
         //Debug.Log(Gold);
+    }
+
+    internal void UpdateGoldUI()
+    {
+     Gold = Data.Instance.playerGold;
+     goldText.text = Gold.ToString();
     }
 }

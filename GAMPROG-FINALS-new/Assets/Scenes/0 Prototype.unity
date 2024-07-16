@@ -1359,6 +1359,7 @@ MonoBehaviour:
   maxAmmo: 0
   reloadSpeed: 0
   recoilCooldown: 0
+  rotateReload: 0
 --- !u!4 &1824802328
 Transform:
   m_ObjectHideFlags: 0
