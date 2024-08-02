@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float health = 100f;
 
     [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI healthText;
     public float moveSpeed; //too lazy zz
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCooldown;
@@ -36,13 +37,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int Gold;
 
     private Timer timer;
+    private ShootGun shoot;
+    private ThirdPersonCamera thirdPersonCamera;
+
+    [SerializeField] private GameObject gameOver;
+
+    internal bool isDead = false;
+
+    private void Awake()
+    {
+        timer = FindObjectOfType<Timer>();
+        shoot = GetComponentInChildren<ShootGun>();
+        thirdPersonCamera = FindObjectOfType<ThirdPersonCamera>();
+    }
 
     private void Start()
     {
+        UpdateHealthUI();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; 
 
-        timer = FindObjectOfType<Timer>();
+        gameOver.SetActive(false);
 
         //for data
         Gold = Data.Instance.playerGold;
@@ -126,10 +141,21 @@ public class PlayerMovement : MonoBehaviour
     internal void TakeDamage(float amount)
     {
         Debug.Log("Hit");
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.PlayerHit);
+        UpdateHealthUI();
         health -= amount;
         if (health <= 0f)
         {
-            Debug.Log("Dead");
+            gameOver.SetActive(true);
+            isDead = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            healthText.text = "0";
+            shoot.enabled = false;
+            thirdPersonCamera.enabled = false;
+            this.enabled = false;
+            gameObject.SetActive(false);
+            //Debug.Log("Dead");
         }
     }
 
@@ -146,5 +172,10 @@ public class PlayerMovement : MonoBehaviour
     {
      Gold = Data.Instance.playerGold;
      goldText.text = Gold.ToString();
+    }
+
+    internal void UpdateHealthUI()
+    {
+    healthText.text = health.ToString();
     }
 }

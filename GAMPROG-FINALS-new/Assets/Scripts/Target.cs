@@ -43,6 +43,7 @@ public class Target : MonoBehaviour
         health -= amount;
         if (health <= 0f)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.EnemyHit);
             gameObject.SetActive(false);
             Invoke("Respawn", respawnTime);
         }

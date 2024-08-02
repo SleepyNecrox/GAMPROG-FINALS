@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
     [SerializeField] internal float currentTime;
     [SerializeField] internal bool timerStart = false;
 
-    [SerializeField] private GameObject gameObject;
+    [SerializeField] private GameObject timerObject;
 
     [SerializeField] private GameObject shopArea;
 
@@ -25,8 +25,8 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         enemyspawner = FindObjectOfType<EnemySpawner>();
-        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
-        Collider collider = gameObject.GetComponent<Collider>();
+        MeshRenderer meshRenderer = timerObject.GetComponent<MeshRenderer>();
+        Collider collider = timerObject.GetComponent<Collider>();
     }
 
     private void Start()

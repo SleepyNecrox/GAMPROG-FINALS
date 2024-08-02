@@ -81,4 +81,19 @@ public class Data : MonoBehaviour
         upgradeGold = PlayerPrefs.GetInt("UpgradeGold", 0);
         wave = PlayerPrefs.GetInt("Wave", 0);
     }
+
+    public void Reset()
+    {
+        playerGold = 0;
+        playerDamage = 25;
+        maxAmmo = 6;
+        reloadSpeed = 3;
+        rotateReload = -100;
+        upgradeDamage = 0;
+        upgradeAmmo = 0;
+        upgradeReload = 0;
+        upgradeCooldown = 0;
+        upgradeGold = 0;
+        wave = 0;
+    }
 }

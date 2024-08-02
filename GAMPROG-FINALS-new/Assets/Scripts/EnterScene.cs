@@ -51,9 +51,9 @@ public class EnterScene : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.E) && inEnterArea)
             {
-                if(enterType == EnterType.ShopEnter) SceneManager.LoadScene(2);
-                if(enterType == EnterType.StageEnter) SceneManager.LoadScene(1);
-                if(enterType == EnterType.PracticeEnter) SceneManager.LoadScene(0);
+                if(enterType == EnterType.ShopEnter) SceneManager.LoadScene("2 Shop");
+                if(enterType == EnterType.StageEnter) SceneManager.LoadScene("1 Stage");
+                if(enterType == EnterType.PracticeEnter) SceneManager.LoadScene("0 Prototype");
             }
     }
 

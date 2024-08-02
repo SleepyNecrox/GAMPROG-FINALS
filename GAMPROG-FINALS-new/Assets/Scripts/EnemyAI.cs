@@ -6,9 +6,7 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float health;
     [SerializeField] private float damage;
-
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float followRange;
     private Transform player;
     private Rigidbody rb;
     private Renderer targetRenderer;
@@ -38,14 +36,10 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        float distance = Vector3.Distance(player.position, transform.position);
+        FollowPlayer();
 
-        if (distance <= followRange)
-        {
-            FollowPlayer();
-        }
 
         if(timer.currentTime <= 0)
         {
@@ -67,6 +61,7 @@ public class EnemyAI : MonoBehaviour
         health -= amount;
         if (health <= 0f)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.EnemyHit);
             spawner.EnemyDied();
             playerMovement.AddGold();
             Destroy(gameObject);
@@ -108,7 +103,7 @@ public class EnemyAI : MonoBehaviour
     {
         health = 30 + (waveNumber * 10);
         damage = 20 + (waveNumber * 2);
-        moveSpeed = 11 + (waveNumber * 0.5f);
+        moveSpeed = 2 + (waveNumber * 0.5f);
     }
 
     private void Die()

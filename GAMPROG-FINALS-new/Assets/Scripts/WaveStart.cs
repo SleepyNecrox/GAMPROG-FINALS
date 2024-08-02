@@ -16,10 +16,10 @@ public class WaveStart : MonoBehaviour
 
     private void Update()
     {
-        ChangeMaterialBasedOnWave();
+        ChangeNumber();
     }
 
-    private void ChangeMaterialBasedOnWave()
+    private void ChangeNumber()
     {
         int waveNumber = timer.waveNumber;
 

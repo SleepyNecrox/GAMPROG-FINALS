@@ -8,10 +8,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnInterval;
     [SerializeField] private int maxEnemies;
     [SerializeField] private bool canSpawn = false;
-
     [SerializeField] private Timer timer;
     private int currentEnemyCount;
-
     private bool EnemiesIncreased = false;
 
     private void Update()
@@ -59,7 +57,8 @@ public class EnemySpawner : MonoBehaviour
         EnemyAI enemyAI = enemyPrefab.GetComponent<EnemyAI>();
         enemyAI.SetStats(timer.waveNumber);
 
-        Instantiate(enemyPrefab, new Vector3(Random.Range(-25f, 25f), Random.Range(0f, 0f), 25), Quaternion.identity);
+        Quaternion rotation = Quaternion.Euler(-90, 180, 0);
+        Instantiate(enemyPrefab, new Vector3(Random.Range(-25f, 25f), Random.Range(0f, 0f), 25), rotation);
         currentEnemyCount++;
     }
 
@@ -70,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void IncreaseEnemies()
     {
-        maxEnemies += 2 * timer.waveNumber;
+        maxEnemies += 3 * timer.waveNumber;
     }
 
 }

@@ -102,6 +102,7 @@ public class ShootGun : MonoBehaviour
         if (thirdPersonCamera.currentStyle == ThirdPersonCamera.CameraStyle.Combat && Input.GetKeyDown(KeyCode.Mouse0) && IsCursorOriginal() && !isReloading && currentAmmoInClip > 0)
         {
             Shoot();
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.Shoot);
             muzzleFlash.Play();
             StartCoroutine(CameraShake(0.1f, 0.3f));
             AddRecoil();
